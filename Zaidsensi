@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ZAID X SENSI — Free Fire Sensitivity Generator</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#080812;
+    color:#fff;
+    min-height:100vh;
+}
+
+header{
+    padding:25px 15px;
+    text-align:center;
+    background:linear-gradient(135deg,#ff1e00,#8b00ff);
+}
+
+header h1{
+    font-size:32px;
+    font-weight:900;
+}
+
+header p{
+    margin-top:8px;
+    color:#eee;
+}
+
+.container{
+    width:95%;
+    max-width:900px;
+    margin:25px auto;
+}
+
+.card{
+    background:#131320;
+    border:1px solid #29293b;
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 10px 30px #0008;
+}
+
+.card h2{
+    margin-bottom:18px;
+    color:#ff4b22;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    margin-bottom:7px;
+    font-weight:bold;
+}
+
+select,
+input{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:1px solid #39394d;
+    background:#0b0b13;
+    color:#fff;
+    outline:none;
+}
+
+select:focus,
+input:focus{
+    border-color:#ff3d1a;
+}
+
+button{
+    border:0;
+    border-radius:11px;
+    padding:14px 18px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.generate{
+    width:100%;
+    margin-top:22px;
+    background:linear-gradient(90deg,#ff3d00,#ff006a);
+    color:white;
+}
+
+.generate:hover{
+    transform:scale(1.01);
+}
+
+.results{
+    display:none;
+}
+
+.sensi-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.sensi{
+    background:#1c1c2a;
+    border-radius:13px;
+    padding:17px;
+    text-align:center;
+}
+
+.sensi span{
+    display:block;
+    color:#aaa;
+    font-size:14px;
+    margin-bottom:7px;
+}
+
+.sensi strong{
+    font-size:30px;
+    color:#ffb000;
+}
+
+.actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.copy{
+    background:#00a86b;
+    color:white;
+}
+
+.regenerate{
+    background:#35354a;
+    color:white;
+}
+
+.info{
+    color:#aaa;
+    line-height:1.6;
+    font-size:14px;
+}
+
+footer{
+    text-align:center;
+    color:#777;
+    padding:25px;
+}
+
+@media(max-width:500px){
+    header h1{
+        font-size:25px;
+    }
+
+    .sensi-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .sensi strong{
+        font-size:25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🔥 ZAID X SENSI</h1>
+    <p>Free Fire Sensitivity Generator</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>🎯 Generate Your Sensitivity</h2>
+
+        <label>📱 Select Device</label>
+
+        <select id="device">
+            <option value="tecno">TECNO</option>
+            <option value="infinix">Infinix</option>
+            <option value="redmi">Redmi / Xiaomi</option>
+            <option value="samsung">Samsung</option>
+            <option value="realme">Realme</option>
+            <option value="oppo">OPPO</option>
+            <option value="vivo">Vivo</option>
+            <option value="iphone">iPhone</option>
+            <option value="oneplus">OnePlus</option>
+            <option value="other">Other Android</option>
+        </select>
+
+
+        <label>🎮 Play Style</label>
+
+        <select id="style">
+            <option value="onetap">One Tap</option>
+            <option value="drag">Drag Headshot</option>
+            <option value="balanced">Balanced</option>
+            <option value="rush">Rush / Fast</option>
+        </select>
+
+
+        <label>⚡ Sensitivity Level</label>
+
+        <select id="level">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+        </select>
+
+
+        <button class="generate" onclick="generateSensitivity()">
+            🚀 GENERATE SENSITIVITY
+        </button>
+
+    </div>
+
+
+    <div class="card results" id="results">
+
+        <h2>🔥 Your Generated Sensitivity</h2>
+
+        <div class="sensi-grid">
+
+            <div class="sensi">
+                <span>General</span>
+                <strong id="general">--</strong>
+            </div>
+
+            <div class="sensi">
+                <span>Red Dot</span>
+                <strong id="redDot">--</strong>
+            </div>
+
+            <div class="sensi">
+                <span>2X Scope</span>
+                <strong id="scope2">--</strong>
+            </div>
+
+            <div class="sensi">
+                <span>4X Scope</span>
+                <strong id="scope4">--</strong>
+            </div>
+
+            <div class="sensi">
+                <span>Sniper</span>
+                <strong id="sniper">--</strong>
+            </div>
+
+            <div class="sensi">
+                <span>Free Look</span>
+                <strong id="freeLook">--</strong>
+            </div>
+
+        </div>
+
+
+        <div class="actions">
+
+            <button class="copy" onclick="copySensitivity()">
+                📋 COPY
+            </button>
+
+            <button class="regenerate" onclick="generateSensitivity()">
+                🔄 REGENERATE
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>ℹ️ About</h2>
+
+        <p class="info">
+            Ye tool selected device aur play style ke hisaab se
+            sensitivity values generate karta hai.
+            Different devices, FPS, touch response aur personal settings
+            ki wajah se actual in-game result different ho sakta hai.
+        </p>
+
+    </div>
+
+</div>
+
+
+<footer>
+    © 2026 ZAID X SENSI • Free Fire Sensitivity Tool
+</footer>
+
+
+<script>
+
+let currentSensitivity = {};
+
+const deviceBonus = {
+
+    tecno: 3,
+    infinix: 4,
+    redmi: 2,
+    samsung: 0,
+    realme: 3,
+    oppo: 2,
+    vivo: 2,
+    iphone: -2,
+    oneplus: 1,
+    other: 0
+
+};
+
+
+const styleBonus = {
+
+    onetap: 6,
+    drag: 4,
+    balanced: 0,
+    rush: 5
+
+};
+
+
+const levelBonus = {
+
+    low: -5,
+    medium: 0,
+    high: 5
+
+};
+
+
+function randomNumber(min,max){
+
+    return Math.floor(
+        Math.random() * (max - min + 1)
+    ) + min;
+
+}
+
+
+function generateSensitivity(){
+
+    const device =
+        document.getElementById("device").value;
+
+    const style =
+        document.getElementById("style").value;
+
+    const level =
+        document.getElementById("level").value;
+
+
+    const bonus =
+        deviceBonus[device] +
+        styleBonus[style] +
+        levelBonus[level];
+
+
+    let general =
+        Math.min(
+            200,
+            Math.max(
+                1,
+                170 + bonus + randomNumber(-4,4)
+            )
+        );
+
+
+    let redDot =
+        Math.min(
+            200,
+            Math.max(
+                1,
+                160 + bonus + randomNumber(-5,5)
+            )
+        );
+
+
+    let scope2 =
+        Math.min(
+            200,
+            Math.max(
+                1,
+                145 + bonus + randomNumber(-5,5)
+            )
+        );
+
+
+    let scope4 =
+        Math.min(
+            200,
+            Math.max(
+                200,
+                130 + bonus + randomNumber(-5,5)
+            )
+        );
+
+
+    /*
+       Sniper ko intentionally lower rakha gaya hai
+       taake scope control easy ho.
+    */
+
+    let sniper =
+        Math.min(
+            200,
+            Math.max(
+                1,
+                90 + Math.floor(bonus/2) + randomNumber(-4,4)
+            )
+        );
+
+
+    let freeLook =
+        Math.min(
+            200,
+            Math.max(
+                1,
+                170 + bonus + randomNumber(-5,5)
+            )
+        );
+
+
+    currentSensitivity = {
+
+        General: general,
+        "Red Dot": redDot,
+        "2X Scope": scope2,
+        "4X Scope": scope4,
+        Sniper: sniper,
+        "Free Look": freeLook
+
+    };
+
+
+    document.getElementById("general").textContent =
+        general;
+
+    document.getElementById("redDot").textContent =
+        redDot;
+
+    document.getElementById("scope2").textContent =
+        scope2;
+
+    document.getElementById("scope4").textContent =
+        scope4;
+
+    document.getElementById("sniper").textContent =
+        sniper;
+
+    document.getElementById("freeLook").textContent =
+        freeLook;
+
+
+    document.getElementById("results").style.display =
+        "block";
+
+
+    document.getElementById("results")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+
+function copySensitivity(){
+
+    if(!currentSensitivity.General){
+
+        alert("Pehle sensitivity generate karo.");
+
+        return;
+
+    }
+
+
+    const text =
+
+`🔥 ZAID X SENSI
+
+General: ${currentSensitivity.General}
+Red Dot: ${currentSensitivity["Red Dot"]}
+2X Scope: ${currentSensitivity["2X Scope"]}
+4X Scope: ${currentSensitivity["4X Scope"]}
+Sniper: ${currentSensitivity.Sniper}
+Free Look: ${currentSensitivity["Free Look"]}`;
+
+
+    navigator.clipboard.writeText(text)
+        .then(function(){
+
+            alert("✅ Sensitivity copied!");
+
+        })
+        .catch(function(){
+
+            alert("Copy nahi hua. Values manually copy karein.");
+
+        });
+
+}
+
+</script>
+
+</body>
+</html>
